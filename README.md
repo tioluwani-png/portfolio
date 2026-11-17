@@ -16,7 +16,7 @@ summary: One line shown in the list.
 The post, in Markdown.
 ```
 
-Shelves: `life`, `ai-explained`, `ai-takes`, `poems`, `research`. Add `draft: true` to hide a post.
+Shelves: `life`, `building`, `ai-explained`, `ai-takes`, `poems`, `research`. Add `draft: true` to hide a post.
 The Writing section appears on the site once there is at least one post.
 
 ## Updating the Now page
