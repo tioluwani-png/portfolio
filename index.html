@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tioluwani Akeju</title>
+<meta name="description" content="Tioluwani Akeju is a product manager in Lagos who also builds. Relaks, FLOIN, FLU Group, StayDry and more.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Bowlby+One&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* Layout idea: the back of a danfo as the hero, then one road running down the
+   left edge with a bus that stays in view while tickets scroll past it. */
+:root{
+  color-scheme: light;
+  --yellow:#FFC61A;      /* danfo body */
+  --black:#0B0B0A;       /* stripes, bumper, ink */
+  --asphalt:#1B1B19;     /* road and dark ground */
+  --paper:#F6EFD9;       /* ticket stock */
+  --stamp:#B3261E;       /* conductor's stamp, tail lights */
+  --ink:#141412;
+  --ink-soft:#55503F;    /* small print on paper */
+  --chalk:#E4DFCF;       /* body text on asphalt */
+  --display:'Bowlby One', Impact, 'Arial Black', sans-serif;
+  --body:'Archivo', 'Helvetica Neue', Arial, sans-serif;
+  --print:'Courier Prime', 'Courier New', monospace;
+  --road:56px;
+  --gap:28px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--asphalt);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.55}
+img{max-width:100%;height:auto;display:block}
+h1,h2,h3,p,ul,ol,figure{margin:0}
+h1,h2,h3{text-wrap:balance}
+a{color:inherit}
+a:focus-visible{outline:3px solid var(--stamp);outline-offset:3px}
+.wrap{max-width:1040px;margin:0 auto}
+.print{font-family:var(--print);letter-spacing:.08em;text-transform:uppercase;font-size:14px}
+.display{font-family:var(--display);font-weight:400;line-height:1.05}
+.h2{font-size:clamp(30px,4.4vw,52px)}
+
+/* ---------- hero ---------- */
+.hero{background:var(--asphalt);color:var(--paper);padding:20px 20px 72px}
+.hero .wrap{display:flex;flex-direction:column;gap:40px}
+.nav{display:flex;flex-wrap:wrap;gap:8px 28px;align-items:center;justify-content:space-between}
+.nav .name{font-weight:700;color:var(--yellow);font-size:15px}
+.nav ul{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:4px 24px}
+.nav a{display:inline-block;padding:12px 0;text-decoration:none;font-size:15px}
+.nav a:hover{color:var(--yellow)}
+.bus-back{background:var(--yellow);color:var(--ink);border:4px solid var(--black);border-radius:36px 36px 10px 10px;overflow:hidden;box-shadow:0 28px 0 -12px rgba(0,0,0,.55)}
+.rear-window{margin:28px 28px 0;background:#22282B;color:var(--paper);border:4px solid var(--black);border-radius:18px;min-height:120px;padding:20px 24px;display:flex;flex-wrap:wrap;gap:12px 24px;align-items:flex-end;justify-content:space-between}
+.rear-window .where{color:var(--yellow)}
+.stripe{height:16px;background:var(--black)}
+.rear-window + .stripe{margin-top:28px}
+.slogan{padding:44px 28px 36px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:8px}
+.slogan h1{font-size:clamp(34px,7.4vw,96px);line-height:1.02;letter-spacing:.01em;text-shadow:4px 4px 0 var(--paper)}
+.slogan .fast{font-family:var(--display);font-size:clamp(28px,4.6vw,56px);line-height:1.1;color:var(--stamp);transform:rotate(-4deg)}
+.tail{padding:24px 28px;display:flex;gap:20px;align-items:center;justify-content:space-between}
+.light{width:56px;height:56px;flex:none;border-radius:50%;background:var(--stamp);border:4px solid var(--black)}
+.plate{background:var(--paper);border:3px solid var(--black);border-radius:8px;padding:10px 22px;text-align:center}
+.plate .print{font-size:13px;letter-spacing:.14em;display:block}
+.plate strong{font-family:var(--display);font-weight:400;font-size:clamp(20px,3.4vw,34px);line-height:1.1;letter-spacing:.04em}
+.bumper{height:30px;background:var(--black)}
+.intro{display:flex;flex-wrap:wrap;gap:28px 56px;align-items:flex-end;justify-content:space-between}
+.intro .text{flex:1 1 520px;min-width:0;display:flex;flex-direction:column;gap:14px}
+.intro .thesis{font-size:clamp(24px,3vw,34px);line-height:1.2;font-weight:700;color:var(--yellow);text-wrap:balance}
+.intro .who{max-width:62ch;color:var(--chalk)}
+.actions{display:flex;flex-wrap:wrap;gap:14px}
+.btn{display:inline-flex;align-items:center;min-height:52px;padding:0 26px;font-weight:700;text-decoration:none;border:3px solid currentColor;border-radius:6px;transition:transform .15s ease}
+.btn:hover{transform:translateY(-2px)}
+.btn.solid-yellow{background:var(--yellow);color:var(--ink);border-color:var(--yellow)}
+.btn.solid-black{background:var(--black);color:var(--yellow);border-color:var(--black)}
+
+/* ---------- route board ---------- */
+.route{background:var(--black);color:var(--paper);padding:64px 20px;border-top:6px dashed var(--yellow);border-bottom:6px dashed var(--yellow)}
+.route .wrap{display:flex;flex-direction:column;gap:32px}
+.route h2{color:var(--yellow)}
+.route .sub{color:#C9C5B6;margin-top:6px}
+.stops{list-style:none;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(220px,100%),1fr));gap:16px}
+.stops a{display:flex;flex-direction:column;gap:4px;min-height:100px;padding:16px;border:2px solid #55503F;border-radius:6px;text-decoration:none;transition:border-color .15s ease,transform .15s ease}
+.stops a:hover{border-color:var(--yellow);transform:translateY(-2px)}
+.stops .yr{font-family:var(--print);font-size:14px;color:var(--yellow)}
+.stops .nm{font-weight:700;font-size:19px}
+.stops .what{font-size:15px;color:#C9C5B6}
+.stops .main a{border-color:var(--yellow)}
+.stops .now a{background:var(--yellow);color:var(--ink);border-color:var(--yellow)}
+.stops .now .yr,.stops .now .what{color:var(--ink)}
+.stops .now .yr{font-weight:700}
+
+/* ---------- the road and tickets ---------- */
+.journey{background:var(--yellow);padding:72px 20px}
+.journey .head{display:flex;flex-direction:column;gap:6px;margin-bottom:36px}
+.lane{display:flex;gap:var(--gap);align-items:stretch}
+.road{flex:none;width:var(--road);border-radius:10px;background:
+  repeating-linear-gradient(to bottom,var(--paper) 0 26px,transparent 26px 60px) center/4px 100% no-repeat,
+  var(--asphalt)}
+.danfo{position:sticky;top:42vh;margin:16px auto;width:36px;height:66px;background:var(--yellow);border:3px solid var(--black);border-radius:9px 9px 7px 7px;
+  background-image:linear-gradient(var(--black),var(--black)),linear-gradient(var(--black),var(--black)),linear-gradient(#22282B,#22282B);
+  background-size:100% 5px,100% 5px,70% 11px;background-position:0 22px,0 34px,50% 46px;background-repeat:no-repeat}
+.cards{flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:36px}
+.stop{position:relative;scroll-margin-top:24px}
+.stop::before{content:"";position:absolute;top:44px;left:calc(-1 * var(--gap) - var(--road));width:var(--road);height:8px;background:var(--yellow)}
+.ticket{background:var(--paper);border:3px solid var(--black);border-radius:10px;display:flex;flex-direction:column}
+.ticket .main{padding:36px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.ticket .stub{position:relative;padding:36px;border-top:3px dashed var(--black);display:flex;flex-direction:column;gap:18px}
+.ticket .meta{color:var(--ink-soft)}
+.ticket h3{font-family:var(--display);font-weight:400;font-size:clamp(28px,3.6vw,42px);line-height:1.05}
+.ticket p,.ticket ul{max-width:60ch}
+.ticket ul{padding-left:20px;display:flex;flex-direction:column;gap:8px}
+.fare{display:flex;flex-direction:column}
+.fare b{font-family:var(--display);font-weight:400;font-size:38px;line-height:1.1;font-variant-numeric:tabular-nums}
+.fare span{font-size:15px;color:var(--ink-soft)}
+.stamp{align-self:flex-start;margin-top:6px;padding:6px 14px;border:3px double var(--stamp);color:var(--stamp);font-family:var(--print);font-weight:700;font-size:15px;letter-spacing:.12em;text-transform:uppercase;transform:rotate(-3deg)}
+.shots{display:flex;flex-wrap:wrap;gap:16px;margin-top:8px}
+.shots figure{flex:1 1 200px;max-width:280px}
+figure img{width:100%;border:2px solid var(--black);border-radius:6px}
+figcaption{font-family:var(--print);font-size:13px;color:var(--ink-soft);margin-top:6px}
+.stub figure{max-width:300px}
+.earlier-head{margin-top:20px}
+.stubcard{background:var(--paper);border:3px dashed var(--black);border-radius:10px;padding:24px;display:flex;flex-direction:column;gap:8px}
+.stubcard .meta{color:var(--ink-soft)}
+.stubcard h3{font-size:24px;line-height:1.2}
+.stubcard p{max-width:68ch}
+@media (min-width:820px){
+  .ticket{flex-direction:row}
+  .ticket .main{flex:1 1 0}
+  .ticket .stub{flex:none;width:320px;border-top:0;border-left:3px dashed var(--black)}
+  /* punched notches where the stub tears off */
+  .ticket .stub::before,.ticket .stub::after{content:"";position:absolute;left:-14px;width:24px;height:24px;border-radius:50%;background:var(--yellow);border:3px solid var(--black)}
+  .ticket .stub::before{top:-15px;clip-path:inset(12px 0 0 0)}
+  .ticket .stub::after{bottom:-15px;clip-path:inset(0 0 12px 0)}
+}
+@media (max-width:600px){
+  :root{--road:30px;--gap:14px}
+  .journey{padding-left:12px;padding-right:14px}
+  .danfo{width:22px;height:42px;border-width:2px;border-radius:6px;background-size:100% 3px,100% 3px,70% 7px;background-position:0 13px,0 21px,50% 29px}
+  .ticket .main,.ticket .stub{padding:24px 20px}
+  .rear-window{margin:16px 16px 0;min-height:88px}
+  .rear-window + .stripe{margin-top:16px}
+  .light{width:36px;height:36px}
+  .tail{padding:18px 16px;gap:12px}
+  .plate{padding:8px 12px}
+}
+
+/* ---------- about ---------- */
+.about{background:var(--paper);padding:72px 20px}
+.about .wrap{display:flex;flex-wrap:wrap;gap:40px 64px}
+.about .story{flex:999 1 460px;min-width:0;display:flex;flex-direction:column;gap:16px}
+.about .story p{max-width:62ch}
+.about .school{font-family:var(--print);font-size:15px;color:var(--ink-soft)}
+.skills{flex:1 1 320px;min-width:0;display:flex;flex-direction:column;gap:20px}
+.skills div{border-top:3px solid var(--black);padding-top:12px}
+.skills h3{font-size:18px}
+.skills p{font-size:16px;color:#3B382E}
+
+/* ---------- last stop ---------- */
+.last{background:var(--yellow);padding:72px 20px 56px}
+.last .wrap{display:flex;flex-direction:column;gap:32px}
+.board{background:var(--black);color:var(--yellow);border-radius:10px;padding:28px 32px}
+.board .print{color:var(--paper);font-size:15px;letter-spacing:.14em}
+.board h2{font-size:clamp(32px,6vw,76px);line-height:1.03}
+.last .ask{max-width:60ch;font-size:19px}
+.last .addr{font-family:var(--print);font-size:16px;overflow-wrap:anywhere}
+.last small{font-family:var(--print);font-size:13px;color:#3B382E}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .btn,.stops a{transition:none}
+  .danfo{position:static}
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <nav class="nav print" aria-label="Main">
+      <span class="name">Tioluwani Akeju</span>
+      <ul>
+        <li><a href="#route">The route</a></li>
+        <li><a href="#tickets">Tickets</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Last stop</a></li>
+      </ul>
+    </nav>
+
+    <div class="bus-back">
+      <div class="rear-window print">
+        <span>Route: idea → launch → revenue</span>
+        <span class="where">Lagos, Nigeria</span>
+      </div>
+      <div class="stripe" aria-hidden="true"></div>
+      <div class="slogan">
+        <h1 class="display">FIGURING IT OUT IS THE SKILL.</h1>
+        <p class="fast">Fast.</p>
+      </div>
+      <div class="stripe" aria-hidden="true"></div>
+      <div class="tail">
+        <div class="light" aria-hidden="true"></div>
+        <div class="plate">
+          <span class="print">Lagos · Centre of excellence</span>
+          <strong>AKEJU · PM 26</strong>
+        </div>
+        <div class="light" aria-hidden="true"></div>
+      </div>
+      <div class="bumper" aria-hidden="true"></div>
+    </div>
+
+    <div class="intro">
+      <div class="text">
+        <p class="thesis">I take ideas from a voice note to a product people pay for.</p>
+        <p class="who">I'm Tioluwani Akeju, a product manager in Lagos who also builds. Since 2022 I've shipped across eight products, from a hackathon parking app to a wellness brand with 15,000+ books sold and an AI bookkeeper that lives in WhatsApp.</p>
+      </div>
+      <div class="actions">
+        <a class="btn solid-yellow" href="#contact">Book a seat</a>
+        <a class="btn" href="#route">See the route</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="route" id="route">
+  <div class="wrap">
+    <div>
+      <h2 class="display h2">The route so far</h2>
+      <p class="sub">Eight stops in four years. Tap a stop to see its ticket.</p>
+    </div>
+    <ol class="stops">
+      <li><a href="#park-and-go"><span class="yr">2022</span><span class="nm">Park and Go</span><span class="what">Hackathon, 3rd place</span></a></li>
+      <li><a href="#converse"><span class="yr">2023</span><span class="nm">Converse AI</span><span class="what">#3 on Product Hunt</span></a></li>
+      <li><a href="#llime"><span class="yr">2023 to 2024</span><span class="nm">LLime AI</span><span class="what">1,000+ signups in 7 days</span></a></li>
+      <li><a href="#keiden"><span class="yr">2024</span><span class="nm">Keiden</span><span class="what">5,000+ users in 3 months</span></a></li>
+      <li class="main"><a href="#staydry"><span class="yr">2025</span><span class="nm">VirtX · StayDry</span><span class="what">1M+ views, Annecy</span></a></li>
+      <li class="main"><a href="#relaks"><span class="yr">2025 to now</span><span class="nm">Relaks</span><span class="what">15,000+ books sold</span></a></li>
+      <li class="main"><a href="#flu"><span class="yr">2025 to now</span><span class="nm">FLU Group</span><span class="what">Creator marketplace</span></a></li>
+      <li class="now"><a href="#floin"><span class="yr">2026 · Current stop</span><span class="nm">FLOIN</span><span class="what">AI bookkeeping on WhatsApp</span></a></li>
+    </ol>
+  </div>
+</section>
+
+<main class="journey" id="tickets">
+  <div class="wrap">
+    <div class="head">
+      <h2 class="display h2">Tickets</h2>
+      <p>One ticket per stop. Each shows what the problem was, what I built and what happened.</p>
+    </div>
+
+    <div class="lane">
+      <div class="road" aria-hidden="true"><div class="danfo"></div></div>
+
+      <div class="cards">
+
+        <article class="stop ticket" id="relaks">
+          <div class="main">
+            <p class="print meta">2025 to now · Co-founder &amp; Product Manager</p>
+            <h3>Relaks</h3>
+            <p>A wellness brand that started as one adult coloring book. The first ad cost ₦2,500 on TikTok and brought about 50,000 views and 10 orders overnight.</p>
+            <ul>
+              <li>Built the whole web app myself with Next.js, Supabase and Paystack. The first working version took about two weeks.</li>
+              <li>Set up distributors in Kano, Abuja, Port Harcourt and Ibadan, then took the books to Kenya, South Africa and the UK.</li>
+              <li>Moved the shop onto relaks.co so customers buy on one link.</li>
+            </ul>
+            <div class="shots">
+              <figure>
+                <img src="relaks-feed.jpg" width="800" height="855" loading="lazy" alt="Relaks app home feed showing a member's finished coloring page beside Relaks pencils">
+                <figcaption>Community feed: members share finished pages</figcaption>
+              </figure>
+              <figure>
+                <img src="relaks-shop.jpg" width="800" height="855" loading="lazy" alt="Relaks shop on relaks.co listing tote bags at ₦16,000 and ₦14,000">
+                <figcaption>The shop on relaks.co</figcaption>
+              </figure>
+            </div>
+          </div>
+          <div class="stub">
+            <div class="fare"><b>15,000+</b><span>books sold in 4 countries</span></div>
+            <div class="fare"><b>₦100M+</b><span>revenue in the first year</span></div>
+            <div class="fare"><b>1,800+</b><span>app users</span></div>
+          </div>
+        </article>
+
+        <article class="stop ticket" id="floin">
+          <div class="main">
+            <p class="print meta">2026 · Founder · Current stop</p>
+            <h3>FLOIN</h3>
+            <p>Bookkeeping for Nigerian traders, inside the app they already use all day. A trader types a sale, an expense or a debt in plain words and FLOIN keeps the books.</p>
+            <ul>
+              <li>Started as a web dashboard. I moved it to WhatsApp because that is where traders already are.</li>
+              <li>The AI only reads the message. SQL does every calculation, so the totals are never guessed.</li>
+              <li>The parser handles Pidgin and broken English, tested on live chats.</li>
+            </ul>
+            <div class="stamp">Working product</div>
+          </div>
+          <div class="stub">
+            <figure>
+              <img src="floin-chat.jpg" width="800" height="964" loading="lazy" alt="WhatsApp chat with FLOIN: the bot records a ₦150,000 withdrawal and replies with the day's sales, expenses, profit and cash in drawer">
+              <figcaption>A real FLOIN chat: one question, the day's books</figcaption>
+            </figure>
+          </div>
+        </article>
+
+        <article class="stop ticket" id="flu">
+          <div class="main">
+            <p class="print meta">2025 to now · COO &amp; Product Lead</p>
+            <h3>FLU Group</h3>
+            <p>A marketplace that pays African creators for the views they deliver, plus a camera rental arm that funds it.</p>
+            <ul>
+              <li>Wrote the 44-page PRD engineers build from: creator verification, brand dashboards and payments.</li>
+              <li>Designed the View-to-Naira payout engine, with fraud checks before any view is paid.</li>
+              <li>Sized the African creator economy at $5.1B from my own research and built the pre-seed pitch on it.</li>
+            </ul>
+          </div>
+          <div class="stub">
+            <div class="fare"><b>44 pages</b><span>engineering-ready PRD</span></div>
+            <div class="fare"><b>₦3M+</b><span>rental revenue in under 6 months</span></div>
+            <div class="fare"><b>$5.1B</b><span>market sized</span></div>
+          </div>
+        </article>
+
+        <article class="stop ticket" id="staydry">
+          <div class="main">
+            <p class="print meta">Jan to Aug 2025 · Project Manager</p>
+            <h3>VirtX · StayDry</h3>
+            <p>An independent African animated series. I joined with no team in place and a 12-month plan.</p>
+            <ul>
+              <li>Recruited and ran animators, developers and a social team across several countries.</li>
+              <li>Built the signup site. 3,000+ people joined before launch, with 2,000+ in the Telegram community.</li>
+              <li>Selected for Annecy 2025, the world's largest animation festival.</li>
+            </ul>
+            <div class="stamp">Arrived 4 months early</div>
+          </div>
+          <div class="stub">
+            <div class="fare"><b>1M+</b><span>views on YouTube, Instagram and TikTok</span></div>
+            <div class="fare"><b>8 of 12</b><span>months used to deliver</span></div>
+            <div class="fare"><b>25,000+</b><span>YouTube subscribers</span></div>
+          </div>
+        </article>
+
+        <h2 class="display h2 earlier-head" id="earlier">Earlier stops</h2>
+
+        <article class="stop stubcard" id="keiden">
+          <p class="print meta">Sept to Dec 2024 · Product Manager</p>
+          <h3>Keiden</h3>
+          <p>Took a CV and cover letter platform to 5,000+ active users in 3 months, with acquisition up 30% and retention up 35%. Positioned it for acquisition by NXT Technologies.</p>
+        </article>
+
+        <article class="stop stubcard" id="llime">
+          <p class="print meta">Oct 2023 to May 2024 · Product Manager</p>
+          <h3>LLime AI</h3>
+          <p>AI lead generation and email deliverability. Top 10 on Product Hunt and 1,000+ signups in the first 7 days. Cut email bounce rates by 20%.</p>
+        </article>
+
+        <article class="stop stubcard" id="converse">
+          <p class="print meta">Jun to Aug 2023 · Product Manager</p>
+          <h3>Converse AI</h3>
+          <p>Led the launch of an AI assistant platform. #3 on Product Hunt for the week, accepted into AppSumo Select and $10,000+ revenue in the first month.</p>
+        </article>
+
+        <article class="stop stubcard" id="park-and-go">
+          <p class="print meta">Oct 2022 · Hackathon team lead</p>
+          <h3>Park and Go</h3>
+          <p>Where it started. I pitched a parking finder for Lagos, led the team and we had a working app in two weeks. 3rd place overall.</p>
+        </article>
+
+      </div>
+    </div>
+  </div>
+</main>
+
+<section class="about" id="about">
+  <div class="wrap">
+    <div class="story">
+      <h2 class="display h2">About the driver</h2>
+      <p>I studied English Language and Literature at the University of Lagos. Nobody was going to build my ideas for me, so I learned to build them myself.</p>
+      <p>Most of my job is figuring things out on the go: a market I haven't sold in, a stack I haven't used, a team I've just met. I do it fast. That is the skill I'd bring to your team.</p>
+      <p class="school">BA English Language &amp; Literature, University of Lagos, 2024<br>Google Project Management certificate (Agile &amp; Scrum), 2024</p>
+    </div>
+    <div class="skills">
+      <div><h3>Product</h3><p>PRDs, roadmaps, user research, A/B testing, sprint management</p></div>
+      <div><h3>Build</h3><p>Next.js, React Native, Supabase, PostgreSQL, Paystack, AI agents and LLM APIs</p></div>
+      <div><h3>Go to market</h3><p>Performance marketing, creator campaigns, African market strategy</p></div>
+    </div>
+  </div>
+</section>
+
+<footer class="last" id="contact">
+  <div class="wrap">
+    <div class="board">
+      <span class="print">Last stop</span>
+      <h2 class="display">YOUR TEAM.</h2>
+    </div>
+    <p class="ask">I'm looking for Product Manager, Project Manager and AI Product Engineer roles. If you have a problem that needs figuring out, there's a seat free.</p>
+    <div class="actions">
+      <a class="btn solid-black" href="mailto:tioluwaniakeju@gmail.com">Email me</a>
+      <a class="btn" href="https://linkedin.com/in/tioluwani-akeju">LinkedIn</a>
+    </div>
+    <p class="addr">tioluwaniakeju@gmail.com · Lagos, Nigeria</p>
+    <small>© 2026 Tioluwani Akeju</small>
+  </div>
+</footer>
+
+</body>
+</html>
