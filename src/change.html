@@ -1,0 +1,241 @@
+<style>
+/* Change Dey? — a bus-ticket price time machine. Same tokens as site.css. */
+.cd-wrap{max-width:760px}
+.cd-hero{display:flex;flex-direction:column;gap:10px;margin-bottom:28px}
+.cd-hero h1{font-family:var(--display);font-weight:400;font-size:clamp(46px,9vw,84px);line-height:.98;margin:4px 0}
+.cd-hero h1 span{color:var(--stamp)}
+.cd-hero p{font-size:18px;max-width:58ch}
+.cd-tabs{display:flex;gap:0;border:3px solid var(--black);border-radius:10px;overflow:hidden;margin-bottom:20px}
+.cd-tabs button{flex:1;min-height:52px;font:700 16px/1.2 var(--body);background:var(--paper);color:var(--ink);border:0;cursor:pointer}
+.cd-tabs button+button{border-left:3px solid var(--black)}
+.cd-tabs button[aria-selected="true"]{background:var(--black);color:var(--yellow)}
+.cd-form{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(200px,100%),1fr));gap:16px;margin-bottom:18px}
+.cd-field{display:flex;flex-direction:column;gap:6px}
+.cd-field label,.cd-legend{font-family:var(--print);font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft)}
+.cd-field input,.cd-field select{min-height:50px;padding:0 14px;font:600 18px/1 var(--body);color:var(--ink);background:#FFFBEF;border:3px solid var(--black);border-radius:8px}
+.cd-field input:focus-visible,.cd-field select:focus-visible{outline:3px solid var(--stamp);outline-offset:2px}
+.cd-money{position:relative}
+.cd-money span{position:absolute;left:14px;top:50%;transform:translateY(-50%);font:700 18px var(--body)}
+.cd-money input{padding-left:32px;width:100%}
+.cd-items{border:0;padding:0;margin:0 0 22px;display:flex;flex-direction:column;gap:10px}
+.cd-group{display:flex;flex-wrap:wrap;gap:8px}
+.cd-chip{display:inline-flex;align-items:center;min-height:42px;padding:0 14px;border:2px solid var(--black);border-radius:999px;background:#FFFBEF;font:600 15px var(--body);cursor:pointer;user-select:none}
+.cd-chip input{position:absolute;opacity:0;pointer-events:none}
+.cd-chip:has(input:checked){background:var(--yellow)}
+.cd-chip:has(input:focus-visible){outline:3px solid var(--stamp);outline-offset:2px}
+.cd-chip:has(input:disabled){opacity:.45;cursor:not-allowed}
+.cd-hint{font-size:14px;color:var(--ink-soft)}
+.cd-more{background:none;border:0;padding:6px 0;font:700 15px var(--body);color:var(--ink);text-decoration:underline;text-underline-offset:4px;cursor:pointer;align-self:flex-start}
+
+/* the ticket */
+.cd-ticket{background:#FFFBEF;border:3px solid var(--black);border-radius:12px;position:relative;margin:8px 0 18px;box-shadow:0 10px 0 -4px var(--black)}
+.cd-ticket::before,.cd-ticket::after{content:"";position:absolute;top:118px;width:28px;height:28px;border-radius:50%;background:var(--paper);border:3px solid var(--black)}
+.cd-ticket::before{left:-17px;clip-path:inset(0 0 0 50%)}
+.cd-ticket::after{right:-17px;clip-path:inset(0 50% 0 0)}
+.cd-thead{background:var(--yellow);border-bottom:3px dashed var(--black);border-radius:9px 9px 0 0;padding:18px 22px;display:flex;justify-content:space-between;align-items:flex-start;gap:12px;min-height:114px;box-sizing:border-box}
+.cd-thead strong{font-family:var(--display);font-weight:400;font-size:30px;line-height:1}
+.cd-thead .print{font-size:12px;text-align:right}
+.cd-tbody{padding:20px 22px 8px}
+.cd-headline{font-size:clamp(20px,3.6vw,26px);line-height:1.3;font-weight:700;margin-bottom:16px;text-wrap:balance}
+.cd-headline em{font-style:normal;background:var(--yellow);padding:0 4px}
+.cd-rows{list-style:none;padding:0;margin:0;display:flex;flex-direction:column}
+.cd-rows li{display:grid;grid-template-columns:1fr auto;gap:4px 12px;padding:12px 0;border-top:2px dotted #BDB49A}
+.cd-rows .nm{font-weight:700}
+.cd-rows .un{font-size:13px;color:var(--ink-soft)}
+.cd-rows .val{text-align:right;font-variant-numeric:tabular-nums;font-weight:700}
+.cd-rows .was{font-size:14px;color:var(--ink-soft);text-align:right;font-variant-numeric:tabular-nums}
+.cd-rows .chg{font-family:var(--print);font-size:13px;font-weight:700}
+.cd-rows .up{color:var(--stamp)} .cd-rows .down{color:#1F6B3A}
+.cd-tfoot{border-top:3px dashed var(--black);padding:14px 22px 18px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;font-family:var(--print);font-size:12px;color:var(--ink-soft)}
+.cd-stamp:empty{display:none}
+.cd-stamp{display:inline-block;margin-top:10px;transform:rotate(-6deg);border:3px double var(--stamp);color:var(--stamp);font:700 14px var(--print);letter-spacing:.12em;padding:4px 10px;text-transform:uppercase;background:rgba(255,251,239,.85)}
+.cd-actions{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:10px}
+.cd-actions button,.cd-actions a{display:inline-flex;align-items:center;justify-content:center;min-height:50px;padding:0 20px;font:700 16px var(--body);border:3px solid var(--black);border-radius:8px;background:var(--paper);color:var(--ink);text-decoration:none;cursor:pointer}
+.cd-actions .primary{background:var(--black);color:var(--yellow)}
+.cd-status{min-height:22px;font-size:14px;color:var(--ink-soft)}
+.cd-about{margin-top:40px;padding-top:22px;border-top:3px dashed var(--black);display:flex;flex-direction:column;gap:12px;font-size:16px}
+.cd-about h2{font-family:var(--display);font-weight:400;font-size:26px}
+.cd-about p{max-width:64ch}
+.cd-empty{padding:18px 0;font-weight:600}
+@media (max-width:600px){.cd-thead strong{font-size:24px}.cd-ticket::before,.cd-ticket::after{top:106px}.cd-thead{min-height:102px}}
+</style>
+
+    <div class="cd-wrap">
+    <div class="cd-hero">
+      <p class="kicker">Free tool · Official NBS prices</p>
+      <h1>Change <span>Dey?</span></h1>
+      <p>Prices don change. See what your money bought before, what it buys now, and how many days of work everyday things cost you.</p>
+    </div>
+
+    <div class="cd-tabs" role="tablist" aria-label="Choose a tool">
+      <button type="button" role="tab" id="tab-then" aria-selected="true" aria-controls="panel">Then vs now</button>
+      <button type="button" role="tab" id="tab-pay" aria-selected="false" aria-controls="panel">My salary</button>
+    </div>
+
+    <form id="panel" role="tabpanel" aria-labelledby="tab-then" novalidate>
+      <div class="cd-form">
+        <div class="cd-field" id="f-amount">
+          <label for="amount">Amount</label>
+          <div class="cd-money"><span aria-hidden="true">₦</span><input id="amount" inputmode="numeric" autocomplete="off" value="10,000"></div>
+        </div>
+        <div class="cd-field" id="f-pay" hidden>
+          <label for="pay">Monthly take-home pay</label>
+          <div class="cd-money"><span aria-hidden="true">₦</span><input id="pay" inputmode="numeric" autocomplete="off" value="70,000"></div>
+        </div>
+        <div class="cd-field" id="f-from">
+          <label for="from">Then</label>
+          <select id="from"></select>
+        </div>
+        <div class="cd-field">
+          <label for="to" id="to-label">Now</label>
+          <select id="to"></select>
+        </div>
+      </div>
+
+      <fieldset class="cd-items">
+        <legend class="cd-legend">Pick up to 6 things</legend>
+        <div class="cd-group" id="chips"></div>
+        <button type="button" class="cd-more" id="more" aria-expanded="false">Show all 51</button>
+        <p class="cd-hint" id="pick-hint" aria-live="polite"></p>
+      </fieldset>
+    </form>
+
+    <section aria-label="Your ticket">
+      <div class="cd-ticket" id="ticket">
+        <div class="cd-thead">
+          <div><strong>CHANGE DEY?</strong><div class="print" style="text-align:left;margin-top:6px" id="t-route"></div></div>
+          <div style="text-align:right"><div class="print" id="t-no"></div><div class="cd-stamp" id="t-stamp"></div></div>
+        </div>
+        <div class="cd-tbody">
+          <p class="cd-headline" id="t-headline"></p>
+          <ul class="cd-rows" id="t-rows"></ul>
+        </div>
+        <div class="cd-tfoot"><span>Source: NBS national average prices</span><span>tioluwaniakeju.com/change</span></div>
+      </div>
+
+      <div class="cd-actions">
+        <button type="button" class="primary" id="save">Save ticket</button>
+        <button type="button" id="share">Share</button>
+        <button type="button" id="copy">Copy text</button>
+        <a id="tweet" href="https://x.com/intent/post" target="_blank" rel="noopener">Post on X</a>
+      </div>
+      <p class="cd-status" id="status" aria-live="polite"></p>
+    </section>
+
+    <section class="cd-about" aria-labelledby="about-h">
+      <h2 id="about-h">Where the numbers come from</h2>
+      <p>Every price is the <strong>national average retail price</strong> published by the <a href="https://microdata.nigerianstat.gov.ng/index.php/catalog">National Bureau of Statistics</a> in its monthly Selected Food Price Watch, fuel price watches (petrol, diesel, kerosene, cooking gas) and Transport Fare Watch. Prices in your market may be higher or lower.</p>
+      <p>Food is priced per kg unless the item says otherwise. Data runs from <span id="range"></span>. Some items only appear from January 2025, when NBS changed its list. The salary tool assumes 22 working days a month and 8 hours a day, and your pay never leaves your phone.</p>
+      <p>Built by <a href="/">Tioluwani Akeju</a>. No politics here, just prices.</p>
+    </section>
+    </div>
+
+<script>
+(function(){
+'use strict';
+var D = {{DATA}};
+var MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+var LONG=['January','February','March','April','May','June','July','August','September','October','November','December'];
+var NOUN={'1 kg':['kg','kg',1],'1 egg':['egg','eggs',0],'30 eggs':['crate','crates',1],'450g loaf':['loaf','loaves',1],'1 litre':['litre','litres',1],'12.5 kg refill':['gas refill','gas refills',2],'1 kg pack':['pack','packs',1],'2 kg pack':['pack','packs',1],'75cl bottle':['bottle','bottles',1],'1 tin':['tin','tins',0],'1 medium':['watermelon','watermelons',1],'one drop':['ride','rides',0],'one trip':['trip','trips',1],'one way':['flight','flights',2]};
+var DEFAULTS=['local-rice','brown-beans','white-garri','egg','petrol','okada'];
+var MAX=6;
+var byId={}; D.items.forEach(function(it){byId[it.id]=it;});
+var state={mode:'then',amount:10000,pay:70000,from:D.earliest,to:D.latest,picked:DEFAULTS.slice(),showAll:false};
+
+// ---------- helpers ----------
+function $(id){return document.getElementById(id);}
+function mlabel(m,long){var y=m.slice(0,4),i=+m.slice(5)-1;return (long?LONG:MON)[i]+' '+y;}
+function naira(n){return '₦'+Math.round(n).toLocaleString('en-NG');}
+function num(s){var n=parseFloat(String(s).replace(/[^\d.]/g,''));return isFinite(n)?n:0;}
+function prevM(m,k){var y=+m.slice(0,4),mo=+m.slice(5)-k;while(mo<1){mo+=12;y--;}return y+'-'+String(mo).padStart(2,'0');}
+function price(it,m){if(it.p[m])return it.p[m];for(var k=1;k<=2;k++){var q=prevM(m,k);if(it.p[q])return it.p[q];}return null;}
+function priceMonth(it,m){if(it.p[m])return m;for(var k=1;k<=2;k++){var q=prevM(m,k);if(it.p[q])return q;}return null;}
+function asOf(it,m){var pm=priceMonth(it,m);return pm&&pm!==m?' ('+mlabel(pm)+' price)':'';}
+function qty(it,amount,m){var p=price(it,m);if(!p)return null;return amount/p;}
+function fmtQty(it,q){var n=NOUN[it.unit]||['unit','units',1];var d=n[2];var s;if(d===0)s=Math.floor(q).toLocaleString('en-NG');else if(q>=100)s=Math.round(q).toLocaleString('en-NG');else s=q.toFixed(q<10?d:1);var one=parseFloat(s.replace(/,/g,''))===1;return s+' '+(n[0]==='kg'?'kg':(one?n[0]:n[1]));}
+var PH={'1 egg':function(n){return 'one egg';},'30 eggs':function(n){return 'a crate of eggs';},'450g loaf':function(n){return 'a loaf of '+n;},'1 litre':function(n){return 'a litre of '+n;},'12.5 kg refill':function(n){return 'a 12.5kg gas refill';},'1 kg pack':function(n){return 'a 1kg pack of '+n;},'2 kg pack':function(n){return 'a 2kg bag of '+n;},'75cl bottle':function(n){return 'a 75cl bottle of '+n;},'1 tin':function(n){return 'a tin of '+n;},'1 medium':function(n){return 'a watermelon';},'one drop':function(n){return n==='okada'?'one okada ride':'one '+n;},'one trip':function(n){return n==='boat ride'?'one boat ride':'one '+n+' trip';},'one way':function(n){return 'one '+n;}};
+function phrase(it){var n=it.name.toLowerCase();if(/milk/.test(n))n=it.name;return PH[it.unit]?PH[it.unit](n):'a kg of '+n;}
+function workTime(cost,pay){var perDay=pay/22;var days=cost/perDay;if(days>=1)return {v:days,txt:(days>=10?Math.round(days):days.toFixed(1))+' days'};var hrs=days*8;if(hrs>=1)return {v:days,txt:hrs.toFixed(1)+' hrs'};var mins=Math.max(1,Math.round(hrs*60));return {v:days,txt:mins+' mins'};}
+function pct(a,b){return (b/a-1)*100;}
+function ticketNo(){var s=state.mode+state.amount+state.pay+state.from+state.to+state.picked.join();var h=0;for(var i=0;i<s.length;i++)h=(h*31+s.charCodeAt(i))>>>0;return ('000000'+(h%1000000)).slice(-6);}
+
+// ---------- URL state ----------
+function readURL(){var q=new URLSearchParams(location.search);if(q.get('m')==='pay')state.mode='pay';if(q.get('a'))state.amount=num(q.get('a'))||state.amount;if(q.get('s'))state.pay=num(q.get('s'))||state.pay;if(q.get('f')&&D.months.indexOf(q.get('f'))>=0)state.from=q.get('f');if(q.get('t')&&D.months.indexOf(q.get('t'))>=0)state.to=q.get('t');if(q.get('i')){var ids=q.get('i').split(',').filter(function(x){return byId[x];}).slice(0,MAX);if(ids.length)state.picked=ids;}}
+function shareURL(){var q=new URLSearchParams();if(state.mode==='pay'){q.set('m','pay');q.set('s',Math.round(state.pay));}else{q.set('a',Math.round(state.amount));q.set('f',state.from);}q.set('t',state.to);q.set('i',state.picked.join(','));return location.origin+location.pathname+'?'+q.toString();}
+function writeURL(){try{history.replaceState(null,'',shareURL());}catch(e){}}
+
+// ---------- build controls ----------
+function fillMonths(){var f=$('from'),t=$('to');f.innerHTML='';t.innerHTML='';D.months.forEach(function(m){var o=document.createElement('option');o.value=m;o.textContent=mlabel(m,true);f.appendChild(o);t.appendChild(o.cloneNode(true));});f.value=state.from;t.value=state.to;}
+function chipsToShow(){if(state.showAll)return D.items;var core=['local-rice','foreign-rice','brown-beans','white-garri','egg','crate-of-eggs','sliced-bread','yam','tomatoes','beef-boneless','frozen-chicken','vegetable-oil','palm-oil','flour','peak-milk','petrol','diesel','cooking-gas','bus-ride-in-town','okada','interstate-bus'];var list=core.map(function(i){return byId[i];}).filter(Boolean);state.picked.forEach(function(id){if(list.indexOf(byId[id])<0)list.push(byId[id]);});return list;}
+function drawChips(){var box=$('chips');box.innerHTML='';chipsToShow().forEach(function(it){var l=document.createElement('label');l.className='cd-chip';var c=document.createElement('input');c.type='checkbox';c.value=it.id;c.checked=state.picked.indexOf(it.id)>=0;c.disabled=!c.checked&&state.picked.length>=MAX;c.addEventListener('change',function(){if(c.checked){if(state.picked.length<MAX)state.picked.push(it.id);}else{state.picked=state.picked.filter(function(x){return x!==it.id;});}drawChips();render();});l.appendChild(c);l.appendChild(document.createTextNode(it.name));l.title=it.unit;box.appendChild(l);});$('more').textContent=state.showAll?'Show fewer':'Show all '+D.items.length;$('more').setAttribute('aria-expanded',state.showAll?'true':'false');$('pick-hint').textContent=state.picked.length>=MAX?'That’s 6. Untick one to swap it.':'';}
+function setMode(m){state.mode=m;var pay=m==='pay';$('tab-then').setAttribute('aria-selected',pay?'false':'true');$('tab-pay').setAttribute('aria-selected',pay?'true':'false');$('panel').setAttribute('aria-labelledby',pay?'tab-pay':'tab-then');$('f-amount').hidden=pay;$('f-from').hidden=pay;$('f-pay').hidden=!pay;$('to-label').textContent=pay?'Prices from':'Now';render();}
+
+// ---------- compute + render ----------
+function compute(){var rows=[],ratios=[];state.picked.forEach(function(id){var it=byId[id];if(state.mode==='pay'){var p=price(it,state.to);rows.push({it:it,p:p,w:p&&state.pay>0?workTime(p,state.pay):null});}else{var a=price(it,state.from),b=price(it,state.to);rows.push({it:it,a:a,b:b});if(a&&b)ratios.push(b/a);}});return {rows:rows,ratio:ratios.length?ratios.reduce(function(x,y){return x+y;},0)/ratios.length:null};}
+var lastText='';
+function render(){var r=compute();var rowsEl=$('t-rows');rowsEl.innerHTML='';$('t-no').textContent='TICKET No. '+ticketNo();var head=$('t-headline'),stamp=$('t-stamp');
+ if(!state.picked.length){head.textContent='Pick at least one thing above to print your ticket.';stamp.textContent='';$('t-route').textContent='';lastText='';return;}
+ if(state.mode==='pay'){
+  $('t-route').textContent='PAY '+naira(state.pay)+'/MONTH · '+mlabel(state.to).toUpperCase()+' PRICES';
+  var valid=r.rows.filter(function(x){return x.w;});
+  if(state.pay<=0){head.textContent='Type your monthly pay above.';}
+  else if(valid.length){var top=valid.slice().sort(function(a,b){return b.w.v-a.w.v;})[0];head.innerHTML='On '+naira(state.pay)+' a month, '+esc(phrase(top.it))+' costs you <em>'+top.w.txt+'</em> of work.';}
+  else head.textContent='No prices for '+mlabel(state.to,true)+' on these items. Try another month.';
+  r.rows.forEach(function(x){var li=document.createElement('li');li.innerHTML='<div><div class="nm">'+esc(x.it.name)+'</div><div class="un">'+esc(x.it.unit)+(x.p?' · '+naira(x.p)+asOf(x.it,state.to):'')+'</div></div><div><div class="val">'+(x.w?x.w.txt:'No data')+'</div><div class="was">of work</div></div>';rowsEl.appendChild(li);});
+  stamp.textContent=valid.length?'Work don plenty':'';
+  lastText='On '+naira(state.pay)+' a month, here’s how much work everyday things cost me ('+mlabel(state.to)+' NBS prices):\n'+valid.map(function(x){return '• '+x.it.name+' ('+x.it.unit+'): '+x.w.txt;}).join('\n');
+ } else {
+  $('t-route').textContent=naira(state.amount)+' · '+mlabel(state.from).toUpperCase()+' → '+mlabel(state.to).toUpperCase();
+  if(state.amount<=0){head.textContent='Type an amount above.';}
+  else if(state.from===state.to){head.textContent='Pick two different months to see the change.';}
+  else if(r.ratio){var same=state.amount*r.ratio;var up=r.ratio>=1;head.innerHTML='What cost '+naira(state.amount)+' in '+mlabel(state.from)+' costs <em>'+naira(same)+'</em> in '+mlabel(state.to)+'.';stamp.textContent=up?'Change don dey':'Prices don drop';}
+  else{head.textContent='No prices for both months on these items. Try other months.';stamp.textContent='';}
+  r.rows.forEach(function(x){var li=document.createElement('li');var right;if(x.a&&x.b){var c=pct(x.a,x.b);var cls=c>0.5?'up':(c<-0.5?'down':'');right='<div class="val">'+fmtQty(x.it,state.amount/x.b)+'</div><div class="was">was '+fmtQty(x.it,state.amount/x.a)+' <span class="chg '+cls+'">'+(c>0?'+':'')+c.toFixed(0)+'% price</span></div>';}else{right='<div class="val">No data</div><div class="was">'+(x.a?'':'not tracked in '+mlabel(state.from))+(x.b?'':' not tracked in '+mlabel(state.to))+'</div>';}
+   li.innerHTML='<div><div class="nm">'+esc(x.it.name)+'</div><div class="un">'+esc(x.it.unit)+(x.b?' · now '+naira(x.b)+asOf(x.it,state.to):'')+'</div></div><div>'+right+'</div>';rowsEl.appendChild(li);});
+  var ok=r.rows.filter(function(x){return x.a&&x.b;});
+  lastText=naira(state.amount)+' in '+mlabel(state.from)+' vs '+mlabel(state.to)+' (NBS prices):\n'+ok.map(function(x){return '• '+x.it.name+': '+fmtQty(x.it,state.amount/x.a)+' → '+fmtQty(x.it,state.amount/x.b);}).join('\n')+(r.ratio?'\nWhat cost '+naira(state.amount)+' then costs '+naira(state.amount*r.ratio)+' now.':'');
+ }
+ writeURL();
+ var t=lastText.split('\n')[0];$('tweet').href='https://x.com/intent/post?text='+encodeURIComponent((state.mode==='pay'?t:(r.ratio?'What cost '+naira(state.amount)+' in '+mlabel(state.from)+' now costs '+naira(state.amount*r.ratio)+'.':t))+' Check yours:')+'&url='+encodeURIComponent(shareURL());
+}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+
+// ---------- ticket image (1080x1350) ----------
+function wrap(ctx,text,x,y,maxW,lh){var words=text.split(' '),line='',lines=[];words.forEach(function(w){var t=line?line+' '+w:w;if(ctx.measureText(t).width>maxW&&line){lines.push(line);line=w;}else line=t;});if(line)lines.push(line);lines.forEach(function(l,i){ctx.fillText(l,x,y+i*lh);});return lines.length*lh;}
+function drawTicket(){var W=1080,H=1350,c=document.createElement('canvas');c.width=W;c.height=H;var x=c.getContext('2d');var Y='#FFC61A',K='#0B0B0A',P='#FFFBEF',R='#B3261E',S='#55503F';
+ x.fillStyle=Y;x.fillRect(0,0,W,H);x.fillStyle=K;for(var i=0;i<W;i+=60){x.fillRect(i,0,30,22);x.fillRect(i+30,H-22,30,22);}
+ var L=70,T=90,TW=W-140,TH=H-200;x.fillStyle=K;x.fillRect(L+10,T+14,TW,TH);x.fillStyle=P;x.fillRect(L,T,TW,TH);x.lineWidth=6;x.strokeStyle=K;x.strokeRect(L,T,TW,TH);
+ x.fillStyle=Y;x.fillRect(L+3,T+3,TW-6,180);x.fillStyle=K;x.font='72px "Bowlby One", Impact, sans-serif';x.fillText('CHANGE DEY?',L+40,T+100);
+ x.font='bold 28px "Courier Prime", monospace';x.fillStyle=K;x.fillText($('t-route').textContent,L+40,T+150);x.textAlign='right';x.fillText('No. '+ticketNo(),L+TW-40,T+64);x.textAlign='left';
+ x.setLineDash([18,12]);x.beginPath();x.moveTo(L,T+183);x.lineTo(L+TW,T+183);x.stroke();x.setLineDash([]);
+ x.fillStyle=K;x.font='bold 44px Archivo, Arial, sans-serif';var hy=T+260;var hh=wrap(x,$('t-headline').textContent,L+40,hy,TW-80,56);
+ var y=hy+hh+20;var items=[].slice.call($('t-rows').children);var rowH=Math.min(118,(T+TH-170-y)/Math.max(1,items.length));
+ items.forEach(function(li){x.strokeStyle='#BDB49A';x.lineWidth=3;x.setLineDash([4,8]);x.beginPath();x.moveTo(L+40,y);x.lineTo(L+TW-40,y);x.stroke();x.setLineDash([]);
+  var nm=li.querySelector('.nm').textContent,un=li.querySelector('.un').textContent.split(' · ')[0],val=li.querySelector('.val').textContent,was=li.querySelector('.was').textContent;
+  x.fillStyle=K;x.font='bold 38px Archivo, Arial, sans-serif';x.fillText(nm,L+40,y+50);x.fillStyle=S;x.font='26px Archivo, Arial, sans-serif';x.fillText(un,L+40,y+86);
+  x.textAlign='right';x.fillStyle=K;x.font='bold 38px Archivo, Arial, sans-serif';x.fillText(val,L+TW-40,y+50);x.fillStyle=was.indexOf('+')>=0?R:S;x.font='bold 24px "Courier Prime", monospace';x.fillText(was,L+TW-40,y+86);x.textAlign='left';y+=rowH;});
+ var st=$('t-stamp').textContent;if(st){x.save();x.translate(L+TW-190,T+150);x.rotate(-0.14);x.strokeStyle=R;x.lineWidth=5;x.font='bold 30px "Courier Prime", monospace';var sw=x.measureText(st.toUpperCase()).width+40;x.strokeRect(-sw/2,-36,sw,60);x.fillStyle=R;x.textAlign='center';x.fillText(st.toUpperCase(),0,6);x.restore();}
+ x.setLineDash([18,12]);x.strokeStyle=K;x.lineWidth=5;x.beginPath();x.moveTo(L,T+TH-120);x.lineTo(L+TW,T+TH-120);x.stroke();x.setLineDash([]);
+ x.fillStyle=K;x.font='bold 34px "Courier Prime", monospace';x.fillText('tioluwaniakeju.com/change',L+40,T+TH-68);x.fillStyle=S;x.font='bold 24px "Courier Prime", monospace';x.fillText('Source: NBS national average prices',L+40,T+TH-28);
+ return c;}
+function ticketBlob(cb){var go=function(){drawTicket().toBlob(cb,'image/png');};if(document.fonts&&document.fonts.ready)document.fonts.ready.then(go);else go();}
+function say(t){$('status').textContent=t;}
+
+// ---------- wire up ----------
+readURL();fillMonths();
+$('amount').value=Math.round(state.amount).toLocaleString('en-NG');$('pay').value=Math.round(state.pay).toLocaleString('en-NG');
+$('tab-then').addEventListener('click',function(){setMode('then');});$('tab-pay').addEventListener('click',function(){setMode('pay');});
+function money(el,key){el.addEventListener('input',function(){state[key]=num(el.value);render();});el.addEventListener('blur',function(){if(state[key]>0)el.value=Math.round(state[key]).toLocaleString('en-NG');});}
+money($('amount'),'amount');money($('pay'),'pay');
+$('from').addEventListener('change',function(e){state.from=e.target.value;render();});$('to').addEventListener('change',function(e){state.to=e.target.value;render();});
+$('more').addEventListener('click',function(){state.showAll=!state.showAll;drawChips();});
+$('panel').addEventListener('submit',function(e){e.preventDefault();});
+$('save').addEventListener('click',function(){ticketBlob(function(b){var a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='change-dey-ticket.png';document.body.appendChild(a);a.click();a.remove();say('Ticket saved. Post it on your status.');});});
+$('share').addEventListener('click',function(){ticketBlob(function(b){var f=new File([b],'change-dey-ticket.png',{type:'image/png'});var data={title:'Change Dey?',text:lastText.split('\n')[0]+' Check yours:',url:shareURL()};if(navigator.canShare&&navigator.canShare({files:[f]})){navigator.share(Object.assign({files:[f]},data)).catch(function(){});}else if(navigator.share){navigator.share(data).catch(function(){});}else{copy(lastText+'\n'+shareURL());}});});
+function copy(t){if(navigator.clipboard){navigator.clipboard.writeText(t).then(function(){say('Copied. Paste it anywhere.');},function(){say('Copy didn’t work here. Select the text and copy it.');});}else say('Copy isn’t supported in this browser.');}
+$('copy').addEventListener('click',function(){copy(lastText+'\nCheck yours: '+shareURL());});
+$('range').textContent=mlabel(D.earliest,true)+' to '+mlabel(D.latest,true);
+drawChips();setMode(state.mode);
+window.__drawTicket=drawTicket;
+})();
+</script>

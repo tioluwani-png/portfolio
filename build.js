@@ -66,7 +66,7 @@ const hasWriting = posts.length > 0;
 function nav(current) {
   const items = [['/#route', 'The route', 'home'], ['/#tickets', 'Tickets', 'home-t']];
   if (hasWriting) items.push(['/writing/', 'Writing', 'writing']);
-  items.push(['/now/', 'Now', 'now'], ['/#contact', 'Last stop', 'contact']);
+  items.push(['/change/', 'Change Dey?', 'change'], ['/now/', 'Now', 'now'], ['/#contact', 'Last stop', 'contact']);
   return '<ul>' + items
     .map(([href, label, key]) => `<li><a href="${href}"${key === current ? ' aria-current="page"' : ''}>${label}</a></li>`)
     .join('') + '</ul>';
@@ -83,10 +83,11 @@ function signup() {
 }
 
 const shell = read('src/page.html');
-function page({ title, description, current, body }) {
+function page({ title, description, current, body, head = '' }) {
   return shell
     .replace('{{TITLE}}', esc(title))
     .replace('{{DESCRIPTION}}', esc(description))
+    .replace('{{HEAD}}', head)
     .replace('{{NAV}}', nav(current))
     .replace('{{SIGNUP}}', signup())
     .replace('{{BODY}}', body);
@@ -109,6 +110,21 @@ write('now/index.html', page({
     <h1 class="page-title">${esc(now.meta.title || 'What I’m doing now')}</h1>
     ${now.meta.updated ? `<p class="updated">Updated ${fmtDate(now.meta.updated)}</p>` : ''}
     <div class="prose">${marked.parse(now.body)}</div>`,
+}));
+
+// Change Dey? (price tool). Data: content/change-data.json, built from NBS price watches.
+const changeData = read('content/change-data.json').trim();
+const changeDesc = 'See what your money bought before and what it buys now. Official NBS prices for food, fuel and transport.';
+write('change/index.html', page({
+  title: 'Change Dey? · What your money buys now',
+  description: changeDesc,
+  current: 'change',
+  head: `<meta property="og:title" content="Change Dey?">
+<meta property="og:description" content="${esc(changeDesc)}">
+<meta property="og:image" content="${config.url}/change/og.png">
+<meta property="og:url" content="${config.url}/change/">
+<meta name="twitter:card" content="summary_large_image">`,
+  body: read('src/change.html').replace('{{DATA}}', () => changeData),
 }));
 
 // Writing
